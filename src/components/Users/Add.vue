@@ -81,7 +81,7 @@ export default{
         avatar:this.List.avatar
     });
          if(result.status === 201){
-            alert("Ticket Added Successfully")
+            this.$alert("Ticket Added Successfully")
             this.$router.push('/list')
          }
     console.log("result",result)

@@ -13,8 +13,9 @@
                 class="Ticket-count d-flex justify-content-between align-items-center"
                 style="margin-bottom: -0.7rem; margin-top: 10px"
               >
-                <b>43,590 TIckets</b>
-                  <router-link to="/add"><button class="btn btn-primary btn-sm" v-on:click="AddTickets()" >ADD TICKET</button></router-link>
+                <b>{{this.list.length}}</b>
+                  <!-- <router-link to="/add"><button class="btn btn-primary btn-sm" v-on:click="AddTickets()" >ADD TICKET</button></router-link> -->
+                  <ModalAdd/>
               </h6>
               <!-- uncomment to add pagination -->             
               <!-- <ul class="pagination pagination-sm justify-content-end">
@@ -37,6 +38,7 @@
           </nav>
         </thead>
       </table>
+      <br>
       <hr />
     </div>
     <!-- Table Data Heading -->
@@ -104,7 +106,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in list" v-bind:key="item.id">
+          <tr v-for = "item in list" v-bind:key = "item.id">
             <td class="align-middle text-sm">
               <input type="checkbox" />
             </td>
@@ -157,7 +159,6 @@
               <router-link :to="'/update/'+item.id">
                 <button
                 class="btn btn-primary btn-sm"
-                v-on:click="UpdateTickets()"
               >
                 <a
                   href="javascript:;"
@@ -170,7 +171,7 @@
                 </a>
               </button>
               </router-link>
-</td>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -180,10 +181,14 @@
 
 <script>
 import apiCall from '../Common/Services/apiCall'
+import ModalAdd from './ModalAdd.vue'
+// import ModalUpdate from './ModalUpdate.vue'
+import Swal from 'sweetalert2'
 export default {
   name: 'List',
   components: {
-    
+  ModalAdd
+  // ModalUpdate
   },
   data() {
     return {
@@ -201,24 +206,31 @@ export default {
       },
       //delete data
     async deleteTicket(id){
-
+          // this.$swal("confirm delete")
           //testing delete function
           console.log("delete function calling")
 
-          alert("Confirm deleting Ticket")
+          // alert("Confirm deleting Ticket")
           //call api to delete data
          await apiCall.deleteData(id)
-         //to check if data is deleted
+          //to check if data is deleted
           // .then(res => {
-            // console.log(res)
+          // console.log(res)
+        Swal.fire({
+        position: 'top-middle',
+        icon: 'success',
+        title: 'Ticket Deleted',
+        showConfirmButton: false,
+        timer: 1500
+        })
+         
           this.getDetails()
           this.list = this.list.filter(item => item.id !== id)
           console.log(this.list)
           // })
    }
-  
 },
-    async mounted() {
+    mounted() {
       this.getDetails()
   }
 }
@@ -231,7 +243,7 @@ export default {
   border-radius: 50%;
 }
 .Tablebox {
-  margin-top: 6.5rem !important;
+  margin-top: 6.5rem;
 }
 .container {
   border-radius: 10px;

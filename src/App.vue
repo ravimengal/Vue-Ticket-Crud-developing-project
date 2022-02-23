@@ -1,21 +1,16 @@
+<template> 
+    <router-view />
+</template>
+
 <script>
  /* eslint-disable */
-import Sidebar from './components/Common/sidebar/Sidebar.vue'
-import { sidebarWidth } from './components/Common/sidebar/state'
+
 export default {
-  components: { Sidebar               
-  },
-  setup() {
-    return { sidebarWidth }
+  components: {               
   }
+ 
 }
 </script>
-<template>
-  <Sidebar/>
-  <div :style="{ 'margin-left': sidebarWidth }">
-    <router-view />
-  </div>
-</template>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
