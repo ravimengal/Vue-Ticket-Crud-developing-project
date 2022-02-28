@@ -1,7 +1,7 @@
 <template>
   <!-- Button trigger modal -->
   <MDBBtn
-
+    
     class="btn btn-primary"
     color="primary"
     aria-controls="exampleModal"
@@ -58,7 +58,7 @@
 </MDBModalBody>
     <MDBModalFooter>
       <MDBBtn color="secondary" @click="exampleModal = false">Close</MDBBtn>
-      <MDBBtn color="primary" v-on:click="addTicket">Add Ticket</MDBBtn>
+      <MDBBtn color="primary" v-on:click="addTicket"  @click="exampleModal = false" >Add Ticket</MDBBtn>
     </MDBModalFooter>
   </MDBModal>
 </template>
@@ -129,8 +129,9 @@ import axios from 'axios';
         timer: 1500
         })
           window.location.reload()
-          this.$router.push('/list')
-        // this.getDetails()
+          // this.$router.push('/list')
+        this.getDetails()
+        // console.log('inside add list')
         // console.log('Add Ticket console calling')
         // console.log(this.List)
            
@@ -156,8 +157,9 @@ import axios from 'axios';
     },
     //created hook
 
-    created() {
+    mounted() {
       this.getDetails()
+      console.log('updated life cycle ')
     }
 
     }

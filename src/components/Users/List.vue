@@ -14,8 +14,9 @@
                 style="margin-bottom: -0.7rem; margin-top: 10px"
               >
                 <b>{{this.list.length}}</b>
-                  <!-- <router-link to="/add"><button class="btn btn-primary btn-sm" v-on:click="AddTickets()" >ADD TICKET</button></router-link> -->
-                  <ModalAdd/>
+                  <router-link to="/add"><button class="btn btn-primary btn-sm" v-on:click="AddTickets()" >ADD TICKET</button></router-link>
+                  
+                  <!-- <ModalAdd/> -->
               </h6>
               <!-- uncomment to add pagination -->             
               <!-- <ul class="pagination pagination-sm justify-content-end">
@@ -181,18 +182,18 @@
 
 <script>
 import apiCall from '../Common/Services/apiCall'
-import ModalAdd from './ModalAdd.vue'
+// import ModalAdd from './ModalAdd.vue'
 // import ModalUpdate from './ModalUpdate.vue'
 import Swal from 'sweetalert2'
 export default {
   name: 'List',
   components: {
-  ModalAdd
+  // ModalAdd
   // ModalUpdate
   },
   data() {
     return {
-      list: []
+      list: {}
     }
   },
   methods: {
@@ -201,11 +202,11 @@ export default {
     async getDetails() {
       const info = await apiCall.getData() 
       //testing api call
-      console.log(info.data)
+      // console.log('List Console',info.data)
       this.list = info.data
       },
       //delete data
-    async deleteTicket(id){
+        async deleteTicket(id){
           // this.$swal("confirm delete")
           //testing delete function
           console.log("delete function calling")
@@ -226,11 +227,11 @@ export default {
          
           this.getDetails()
           this.list = this.list.filter(item => item.id !== id)
-          console.log(this.list)
-          // })
+          console.log('List after Delete function',this.list)
    }
 },
     mounted() {
+      console.log('List Mounted lifecycle hook')
       this.getDetails()
   }
 }

@@ -52,8 +52,9 @@
 </template>
     
 <script>
-import axios from 'axios';
+import axios from 'axios'
 import Swal from 'sweetalert2'
+import apiCall from '../Common/Services/apiCall'
 export default{
     name:'Update',
     components:{
@@ -74,6 +75,14 @@ export default{
         }
     },
     methods:{
+
+      async getDetails() {
+      const info = await apiCall.getData() 
+      //testing api call
+      console.log(info.data)
+      this.list = info.data
+      },
+    
       async updateTicket(){
         
         // console.log("Update is running",this.List);
@@ -118,6 +127,9 @@ export default{
          //we are getting the id from the url declared in the route "/update/:id"
         console.log(this.$route.params.id);
         this.List = result.data;
+ },
+ updated(){
+   this.getDetails();
  }
 }
 </script>

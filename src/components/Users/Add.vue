@@ -36,15 +36,17 @@
   </div>
   <div class="col-12">
     <button type="button" class="btn btn-primary" v-on:click="addTicket">Add Ticket</button>
+     <router-link to="/list">   
+        <button class="btn btn-primary" style="margin-left:50px;">Back to List</button>
+    </router-link>
   </div>
 </form>
 </div>
- <router-link to="/list">   
-        <button class="btn btn-primary mt-4" style="margin-left:50px;">Back to List</button>
-    </router-link>
+
 </template>  
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 export default{
     name:'Add',
     components:{
@@ -67,8 +69,7 @@ export default{
     methods:{
 
     async addTicket(){
-    console.log(this.List)
-
+    // console.log(this.List)
     //defining to add tickets to the database
     const result = await axios.post("http://localhost:3000/users",{
         id:this.List.id,
@@ -79,12 +80,29 @@ export default{
         status:this.List.status,
         time:this.List.time,
         avatar:this.List.avatar
-    });
-         if(result.status === 201){
-            this.$alert("Ticket Added Successfully")
-            this.$router.push('/list')
-         }
-    console.log("result",result)
+    })
+    console.log(result.status)
+    if(result.status == 201){
+      Swal.fire({
+       position: 'center',
+        icon: 'success',
+        title: 'Ticket has  been updated',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      this.$router.push('/list')
+    }else{
+      Swal.fire({
+        title: 'Error',
+        text: 'Ticket Not Added',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+    }
+
+    //         alert("Ticket Added Successfully")
+    //         this.$router.push('/list') 
+    // console.log("result",result)
     }
     }
     }
